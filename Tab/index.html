@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Tab</title>
+		<link rel="stylesheet" href="./style.css" />
+	</head>
+	<body>
+		<div class="container">
+			<div class="tabs_wrap">
+				<ul class="tabs_list" role="tablist">
+					<li class="tabs_list_item active">
+						<button type="button" class="tabs_link_button">Tab 1</button>
+					</li>
+					<li class="tabs_list_item">
+						<button type="button" class="tabs_link_button">Tab 2</button>
+					</li>
+					<li class="tabs_list_item">
+						<button type="button" class="tabs_link_button">Tab 3</button>
+					</li>
+				</ul>
+				<div class="tabs_container">
+					<div class="tabs_content">
+						<div class="tabs_panels">
+							<div class="tabs_panel active">
+								<h4>First Title</h4>
+								<p>
+									Lorem ipsum dolor sit amet consectetur adipisicing elit.
+									Dolore explicabo cum dolores hic possimus aut corrupti
+									quisquam aperiam quia veniam inventore officiis nam error sunt
+									libero, commodi architecto reiciendis qui fuga, itaque
+									delectus quidem sequi. Impedit natus culpa nihil aperiam
+									adipisci aliquam error, suscipit odio? Error sed esse
+									perspiciatis quasi velit, ratione odit architecto? Explicabo
+									pariatur.
+								</p>
+							</div>
+
+							<div class="tabs_panel">
+								<h4>Second Title</h4>
+								<p>
+									Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+									Deleniti, fugiat ab? Accusamus sed a iusto? Placeat incidunt
+									repudiandae vero magnam nihil tempore quasi earum illum totam
+									aut delectus aliquam pariatur, iste, qui provident quo
+									voluptatem neque facere id laudantium aliquid numquam nisi
+									accusantium. Inventore reiciendis nulla, iste perferendis.
+								</p>
+							</div>
+
+							<div class="tabs_panel">
+								<h4>Third Title</h4>
+								<p>
+									Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+									Quaerat autem accusantium voluptate debitis ipsa animi aliquid
+									dolore? Suscipit consequatur architecto ullam perferendis
+									praesentium sed aliquid voluptatem quibusdam laborum,
+									doloremque aut atque debitis et laudantium qui veniam eligendi
+									accusamus ipsam optio, assumenda aliquam ipsum dolorem
+									similique?
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="./script.js"></script>
+		<script>
+			const mainTab = new Tab(document.querySelector(".tabs_wrap"));
+		</script>
+	</body>
+</html>
