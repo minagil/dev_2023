@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>SlectMenu DropDown</title>
+		<link rel="stylesheet" href="./style.css" />
+	</head>
+	<body>
+		<div class="language_wrap">
+			<div class="language_inner">
+				<button type="button" class="selectmenu_title">
+					<span class="lang_title">Korean</span>
+				</button>
+				<ul class="selectmenu_list">
+					<li class="selectmenu_item">
+						<button type="button">
+							<span class="lang lang_eng">English</span>
+						</button>
+					</li>
+					<li class="selectmenu_item">
+						<button type="button">
+							<span class="lang lang_kor">Korean</span>
+						</button>
+					</li>
+					<li class="selectmenu_item">
+						<button type="button">
+							<span class="lang lang_vn">Vetanam</span>
+						</button>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<script src="./script.js"></script>
+		<script>
+			const lang = new SelectMenuDropDown(
+				document.querySelector(".language_wrap")
+			);
+		</script>
+	</body>
+</html>
