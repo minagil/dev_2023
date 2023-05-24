@@ -6,7 +6,7 @@ const Slider = function (element) {
 	let index = 0;
 	let currentIndex = 0;
 
-	function setIndex() {
+	function getIndex() {
 		const uicarousel_items =
 			uicarousel_container.querySelectorAll(".uicarousel_item");
 		for (let i = 0; i < uicarousel_items.length; i++) {
@@ -16,7 +16,8 @@ const Slider = function (element) {
 		}
 	}
 
-	function prevToslide(targetIndex) {
+	function prevToslide() {
+		const targetIndex = getIndex();
 		if (currentIndex === 0) {
 			return false;
 		}
@@ -26,7 +27,9 @@ const Slider = function (element) {
     updateItems();
 	}
 
-	function nextToslide(targetIndex) {
+	function nextToslide() {
+    const targetIndex = getIndex();
+
 		const uicarousel_items = uicarousel_container.querySelectorAll(".uicarousel_item");
 		if (currentIndex >= uicarousel_items.length - 1) {
 			return false;
@@ -51,13 +54,11 @@ const Slider = function (element) {
 
 	function onHandlerEvent() {
 		uicarousel_btn_next.addEventListener("click", function () {
-			const targetIndex = setIndex();
-			nextToslide(targetIndex);
+			nextToslide();
 		});
 
 		uicarousel_btn_prev.addEventListener("click", function () {
-			const targetIndex = setIndex();
-			prevToslide(targetIndex);
+			prevToslide();
 		});
 	}
 
