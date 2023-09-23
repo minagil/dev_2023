@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<!--Google Fonts and Icons-->
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Round|Material+Icons+Sharp|Material+Icons+Two+Tone" rel="stylesheet" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+		<style>
+			body {
+				width: 100%;
+				height: 100vh;
+				margin: 0;
+				padding: 0;
+				background: rgb(214, 104, 103);
+			}
+			.center {
+				width: 100%;
+				height: 100%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+			.sortable_item_container {
+				position: relative;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				flex-direction: column;
+			}
+			.item {
+				width: 350px;
+				height: 60px;
+				box-sizing: border-box;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				position: relative;
+				background: white;
+				border-radius: 3mm;
+				margin: 10px 0;
+				cursor: grab;
+				transition: margin 0.35s, box-shadow 0.35s, top 0.35s;
+			}
+			.name {
+				width: 100%;
+				text-align: center;
+				font-family: poppins;
+				font-size: 18px;
+				font-weight: 500;
+			}
+			.item span {
+				position: absolute;
+				top: 50%;
+				right: 10px;
+				transform: translate(0, -50%);
+				font-size: 30px;
+				color: rgb(180, 180, 180);
+			}
+			.item.dragging {
+				position: absolute;
+				left: 50%;
+				transform: translate(-50%, 0) scale(1.15);
+				pointer-events: none;
+				z-index: 1000;
+				box-shadow: rgba(0, 0, 0, 0.19) 0px 5px 10px, rgba(0, 0, 0, 0.23) 0px 3px 3px;
+			}
+			.insert-animation {
+				animation: scaleit 0.1s ease-in-out;
+			}
+			@keyframes scaleit {
+				from {
+					transform: translate(-50%, 0) scale(1);
+				}
+			}
+			.item.dragging .name {
+				color: rgb(218, 83, 80);
+			}
+			.item.dragging span {
+				color: rgb(214, 104, 103);
+			}
+		</style>
+	</head>
+	<body>
+		<div class="center">
+			<div class="sortable_list">
+				<div class="sortable_item_container">
+					<div class="item" data-type="dragable">
+						<div class="name">Item 1</div>
+						<span class="material-icons-round">drag_indicator</span>
+					</div>
+					<div class="item" data-type="dragable">
+						<div class="name">Item 2</div>
+						<span class="material-icons-round">drag_indicator</span>
+					</div>
+					<div class="item" data-type="dragable">
+						<div class="name">Item 3</div>
+						<span class="material-icons-round">drag_indicator</span>
+					</div>
+					<div class="item" data-type="dragable">
+						<div class="name">Item 4</div>
+						<span class="material-icons-round">drag_indicator</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			const Sortable = function (selector) {
+				let isDragging = false;
+				let currentItem = null;
+				let currentItemOffsetTop = null;
+				let sortableContainer = null;
+				let posY = null;
+				let draggableItems = [];
+				let currentOffsetTop = 0;
+
+				function getPosY(element) {
+					if (!element) {
+						return;
+					}
+
+					currentItem = element;
+					currentOffsetTop = currentItem.offsetTop;
+					return currentOffsetTop;
+				}
+
+				function dragStart(e) {
+					const item = e.target.closest('[data-type="dragable"]');
+
+					if (item) {
+						isDragging = true;
+						currentItemOffsetTop = getPosY(item);
+						currentItem.classList.add("dragging");
+						document.body.style.userSelect = "none";
+						currentItem.style.top = currentItemOffsetTop + "px";
+						posY = e.clientY || e.touches[0].clientY;
+					}
+				}
+
+				function dragOver(e) {
+					if (isDragging && currentItem) {
+						const currentPosY = e.clientY || e.changedTouches[0].clientY;
+
+						let newTop = currentItemOffsetTop - (posY - currentPosY);
+						// console.log(currentItemOffsetTop, posY, currentPosY)
+						currentItem.style.top = newTop + "px";
+
+						swapItem(currentPosY);
+					}
+				}
+
+				function dragEnd() {
+					if (currentItem) {
+						currentItem.classList.remove("dragging");
+						currentItem.style.top = "auto";
+						currentItem = null;
+						isDragging = false;
+						document.body.style.userSelect = "auto";
+					}
+				}
+
+				function swapItem(newPosY) {
+					const siblingNodes = Array.from(document.querySelectorAll(".item:not(.dragging)"));
+					console.log(siblingNodes);
+					const nextItem = siblingNodes.find((siblingNode) => {
+						return newPosY - sortableContainer.getBoundingClientRect().top <= siblingNode.offsetTop + siblingNode.offsetHeight / 2;
+					});
+
+					sortableContainer.insertBefore(currentItem, nextItem);
+				}
+
+				function init() {
+					if (!selector) {
+						return console.error("선택자는 필수입력입니다.");
+					}
+
+					const { target } = selector;
+					sortableContainer = target.querySelector(".sortable_item_container");
+					sortableContainer.style.width = sortableContainer.offsetWidth + "px";
+					sortableContainer.style.height = sortableContainer.offsetHeight + "px";
+
+					draggableItems = target.querySelectorAll(".item");
+
+					document.addEventListener("mousedown", dragStart, false);
+					document.addEventListener("touchstart", dragStart, false);
+					document.addEventListener("mouseover", dragOver, false);
+					document.addEventListener("touchmove", dragOver, false);
+					document.addEventListener("mouseup", dragEnd, false);
+					document.addEventListener("touchend", dragEnd, false);
+				}
+
+				init();
+			};
+			const mainsortable = new Sortable({
+				target: document.querySelector(".sortable_list"),
+			});
+		</script>
+	</body>
+</html>
