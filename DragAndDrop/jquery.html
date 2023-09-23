@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+
+		<style>
+			#sortable {
+				list-style-type: none;
+				width: 50%;
+			}
+
+			#sortable li {
+				margin: 10px 0;
+				padding: 0.5em;
+				font-size: 25px;
+				height: 20px;
+			}
+			#sortable li.active {
+				color: red;
+			}
+		</style>
+
+		<script>
+			$(function () {
+				$("#sortable").sortable({
+					activate: function (event, ui) {
+						ui.item.addClass("active");
+					},
+					stop: function (event, ui) {
+						ui.item.removeClass("active");
+					},
+				});
+			});
+		</script>
+	</head>
+
+	<body>
+		<center>
+			<h1 style="color: green">GeeksforGeeks</h1>
+
+			<h4>jQuery UI Sortable Widget classes Option</h4>
+
+			<ul id="sortable">
+				<li class="ui-state-default">BCD</li>
+				<li class="ui-state-default">CAB</li>
+				<li class="ui-state-default">BAC</li>
+				<li class="ui-state-default">BCA</li>
+				<li class="ui-state-default">ABC</li>
+			</ul>
+		</center>
+	</body>
+</html>
